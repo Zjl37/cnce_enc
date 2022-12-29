@@ -1,12 +1,10 @@
 use std::env;
 use std::process;
 
-extern crate cnce_enc;
 use cnce_enc::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    let config = Config::build(&args).unwrap_or_else(|err| {
+    let config = Config::build(env::args()).unwrap_or_else(|err| {
         println!("解析参数出错: {err}");
         process::exit(1);
     });
