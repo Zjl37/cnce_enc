@@ -7,12 +7,15 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
-        if args.len() < 2 {
-            return Err("参数不足！");
-        }
-
-        let file_path = args[1].clone();
+    pub fn build(
+	mut args: impl Iterator<Item = String>
+    ) -> Result<Config, &'static str> {
+	args.next();
+	
+        let file_path = match args.next() {
+	    Some(arg) => arg,
+	    None => return Err("参数不足！请提供文件名。"),
+	};
 
         Ok(Config { file_path })
     }
